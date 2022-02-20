@@ -1,37 +1,34 @@
 #include"dsu.h"
-
-void forest::Make_Set() {
-    for (int i = 0; i < 100000; i++) {
+void forest::Make_Set() 
+{
+    for (int i = 0; i < 100000; i++)
+    {
         p[i] = i;
         rk[i] = 1;
     }
 }
-int forest::Find_x(int v) {
-    if (p[v] == v) {
-        return v;
-    }
-    else {
-        return p[v] = Find_x(p[v]);
-    }
+int forest::Find_x(int v)
+{
+    if (p[v] == v)  return v;
+    else  return p[v] = Find_x(p[v]);//эвристика сжатия пути, элементу с помощью рекурсии в качестве родителя присваивается представитель множества
 }
-bool forest::Union(int a, int b) {
+bool forest::Union(int a, int b) 
+{
     int ra = Find_x(a), rb = Find_x(b);
-
-    if (ra == rb) {
-        return false;
-    }
-    else {
-        if (rk[ra] < rk[rb]) {
-            p[ra] = rb;
+    if (ra == rb) return false; //если два элемента уже были в одном множестве, выходим из функции
+    else 
+    {
+        if (rk[ra] < rk[rb])//использование рангов для быстродействия программы
+        {
+            p[ra] = rb;//если говорить образно, то легче маленькую кучу перетащить в большую, чем большую в маленькую
         }
-        else if (rk[rb] < rk[ra]) {
-            p[rb] = ra;
-        }
-        else {
-            p[ra] = rb;
-            rk[rb]++;
-        }
-
+        else
+            if (rk[rb] < rk[ra]) p[rb] = ra;//элементу с наименьшим рангом присваиваем в качестве родителя элемент с высшим рангом
+            else//или наоборот, если ранги равны,то в принципе не важно, какое множество "присоединять" к другому
+            {
+                p[ra] = rb;
+                rk[rb]++;
+            }
         return true;
     }
 }

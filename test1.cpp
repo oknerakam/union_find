@@ -4,18 +4,12 @@
 using namespace std;
 int main()
 {
-    
     forest tree;
-
+    tree.Make_Set();
     ifstream file("a.txt");
     char temp;
     int x, y;
     int i = 0;
-    file >> temp;
-    for (int i = 1; i <= (temp - '0')+1; i++)
-    {
-        tree.Make_Set(i);
-    }
     while(file)
     {
         file >> temp;
